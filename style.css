@@ -1,15 +1,27 @@
 body {
+    
     display: flex;
     flex-direction: column;
+    margin-left: 5rem;
+    width: 80vw;
+    height: 120vh;
 }
 
 #grid {
     display: grid;
+    justify-content: center;
+    
     grid-template-columns: repeat(3, 3rem);
-    grid-template-rows:repeat(3, 2rem)
+    grid-template-rows:repeat(3, 2rem);
+    
     
 }
 
 .gridItem {
+    display: flex;
     justify-content: center;
+    align-items: center;
+    border: 2px solid black;
+    border-radius: 10%;
+    width: 10rem;
 }
