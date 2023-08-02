@@ -15,25 +15,7 @@ const toggleActive = (first, second) => {
     first.active ? first.active = false : first.active = true
     second.active ? second.active = false : second.active = true
     activeAnnounce.innerHTML = `<h2>Active player: ${first.active ? first.name : second.name}.</h2>`
-}
-
-
-  // module function example
-  /*
-  const moduleCalc = (() => {
-    const add = (a,b) => a+b;
-    return {
-      a,b
-    }
-  })
-  */
-  
-  const gameBoard = () => {};
-  const displayController = () => {};
-  
-
-const player1 = new Player("Player 1", 20);
-const player2 = new Player("Player 2", 10);
+}  
 console.log(player1, player2);
 
 // module function example
