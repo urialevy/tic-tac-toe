@@ -18,14 +18,39 @@ const gameBoard = (() => {
     const addClick = () => {
         gridItems.forEach(square => {
             square.addEventListener('click', function(e){
-                displayController.toggleActive(player1, player2)
+                e.preventDefault()
+                if (square.innerHTML == '') {
+                addMarker(square)
+                displayController.toggleActive(player1, player2)}
             })
         })
     }
+    
+    let board = [];
+    for (let i = 0; i < 9; i++) {
+        board.push('');
+    }
+    const addMarker = (square) => {
+        player1.active? square.innerHTML = `X` : square.innerHTML = 'O';
+        game.reduceSpaces()
+    }
     return {
         addClick,
+        addMarker
     }
 })();
+
+const game = (() => {
+    let remainingSpaces = 9
+    let winner = false;
+    const reduceSpaces =() => {
+        console.log(remainingSpaces)
+    }
+    return {
+        remainingSpaces,
+        reduceSpaces
+    }
+})()
 
 const displayController = (() => {
     const activeAnnounce = document.querySelector('#active')
@@ -33,10 +58,10 @@ const displayController = (() => {
     first.active ? first.active = false : first.active = true
     second.active ? second.active = false : second.active = true
     activeAnnounce.innerHTML = `<h2>Active player: ${first.active ? first.name : second.name}.</h2>`}
-    toggleActive(player1, player2)
+    
     return {
-        activeAnnounce,
-        toggleActive
+        toggleActive,
+        
     }
 
 })()
