@@ -1,63 +1,68 @@
 "use strict"
 // factory function for players
-function Player(name, marker, active) {
+function Player(name, marker) {
     this.name = name;
     this.marker = marker;
-    this.active = active;
-    
-  }
-  
-  const player1 = new Player("Player 1", 'X', true);
-  const player2 = new Player("Player 2", 'O', false);
-  
 
+  }
+  const player1 = new Player("Player 1", 'X', );
+  const player2 = new Player("Player 2", 'O', );
 
 const gameBoard = (() => {
     const gridItems = document.querySelectorAll('.gridItem')
-    console.log(gridItems)
     const addClick = () => {
         gridItems.forEach(square => {
             square.addEventListener('click', function(e){
                 e.preventDefault()
                 if (square.innerHTML == '') {
                 addMarker(square)
-                displayController.toggleActive(player1, player2)}
+                }
             })
         })
     }
-    
+    let currentPlayer = player1;
     let board = [];
     for (let i = 0; i < 9; i++) {
         board.push('');
     }
     const addMarker = (square) => {
-        player1.active? square.innerHTML = `X` : square.innerHTML = 'O';
+        square.innerHTML = `${currentPlayer.marker}`
+        currentPlayer === player1 ? currentPlayer = player2 : currentPlayer = player1;
         game.reduceSpaces()
+        game.checkWinningPosition()
     }
     return {
         addClick,
-        addMarker
+        addMarker,
+        gridItems,
+        currentPlayer
+    
     }
 })();
 
 const game = (() => {
     let remainingSpaces = 9
     let winner = false;
+
     const reduceSpaces =() => {
-        console.log(remainingSpaces)
+        remainingSpaces--
     }
+    const winningPositions = [[0,1,2], [3,4,5], [6,7,8],[0,4,8], [2,4,6], [0,3,6], [1,4,7], [2,5,8]]
+    const checkWinningPosition = () => winningPositions.forEach(winningArray => winningArray.every(entry => gameBoard.gridItems[entry].innerHTML ==gameBoard.currentPlayer.marker) ? console.log('winner') : console.log('nothing yet'))
     return {
         remainingSpaces,
-        reduceSpaces
+        reduceSpaces,
+        winningPositions,
+        checkWinningPosition
     }
+
+    
 })()
 
 const displayController = (() => {
     const activeAnnounce = document.querySelector('#active')
     const toggleActive = (first, second) => {
-    first.active ? first.active = false : first.active = true
-    second.active ? second.active = false : second.active = true
-    activeAnnounce.innerHTML = `<h2>Active player: ${first.active ? first.name : second.name}.</h2>`}
+    activeAnnounce.innerHTML = `<h2>Active player: ${gameBoard.currentPlayer.name}.</h2>`}
     
     return {
         toggleActive,
