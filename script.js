@@ -11,8 +11,10 @@ function Player(name, symbol, active) {
   console.log(player1, player2);
   
 const toggleActive = (first, second) => {
+    const activeAnnounce = document.getElementById('active')
     first.active ? first.active = false : first.active = true
     second.active ? second.active = false : second.active = true
+    activeAnnounce.innerHTML = `<h2>Active player: ${first.active ? first.name : second.name}.</h2>`
 }
 
 

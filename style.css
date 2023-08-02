@@ -1,0 +1,15 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+#grid {
+    display: grid;
+    grid-template-columns: repeat(3, 3rem);
+    grid-template-rows:repeat(3, 2rem)
+    
+}
+
+.gridItem {
+    justify-content: center;
+}
