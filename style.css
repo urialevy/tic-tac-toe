@@ -22,3 +22,26 @@ body {
     border: 2px solid grey;
     border-radius: 10%;
 }
+
+.main {
+    display: flex;
+    justify-items: space-around;
+    justify-content: space-around;
+    flex-direction: column;
+}
+
+form {
+    width: 20rem;
+    display: flex;
+    flex-direction:column;
+    align-self: center;
+    align-items:center;
+}
+
+#player1Name, #player2Name {
+    width: 7rem;
+    margin-left: 25px;
+}
+#submitBtn {
+    width: 5rem;
+}
