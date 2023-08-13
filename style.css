@@ -45,3 +45,10 @@ form {
 #submitBtn {
     width: 5rem;
 }
+
+#winner {
+    display: grid;
+    grid-template-columns: 50rem;
+    grid-template-rows: 5rem 2rem;
+    
+}
