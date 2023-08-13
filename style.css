@@ -54,6 +54,7 @@ form {
 #winner {
     display: grid;
     justify-items: center;
+    grid-template-rows: 5rem 2rem;
     
 }
 #active {
