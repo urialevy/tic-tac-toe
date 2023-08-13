@@ -57,3 +57,8 @@ form {
     display: grid;
     justify-items: center;
 }
+
+.header {
+    display: grid;
+    justify-items: center;
+}
