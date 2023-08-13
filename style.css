@@ -50,5 +50,10 @@ form {
     display: grid;
     grid-template-columns: 50rem;
     grid-template-rows: 5rem 2rem;
+    justify-items: center;
     
+}
+#active {
+    display: grid;
+    justify-items: center;
 }

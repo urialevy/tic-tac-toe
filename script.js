@@ -37,8 +37,9 @@ const gameBoard = (() => {
         e.preventDefault();
         player1.name = player1Name.value == '' ? 'Player 1' : player1Name.value
         player2.name = player2Name.value == '' ? 'Player 2' : player2Name.value
-        document.querySelector('#active').innerHTML = `<h2>Active player: ${currentPlayer.name}. </h2>`
+        document.querySelector('#active').innerHTML = `<h2>${currentPlayer.name}'s turn </h2>`
         document.querySelector('#grid').style.visibility = 'visible'
+        form.style.visibility='hidden'
       })
     }
     let currentPlayer = player1;
@@ -63,6 +64,8 @@ const gameBoard = (() => {
         player1.name = '';
         player2.name = '';
         document.querySelector('#grid').style.visibility = 'hidden'
+        form.style.visibility='visible';
+        
     }
 
     return {
@@ -88,21 +91,23 @@ const game = (() => {
     const checkWinningPosition = (player) =>{ 
         winningPositions.forEach(winningArray => winningArray.every(entry => gameBoard.gridItems[entry].innerHTML ==player.marker) ? winnerFound(player) : checkStalemate(remainingSpaces))}
     const winnerFound = (player) => {
-        document.querySelector('#active').innerHTML = ``;
         document.querySelector('#winner').innerHTML = `<div><h1>Winner - ${player.name}!</h1></div><div><button id='newGameBtn'>New game</button></div>`
         gameBoard.gridItems.forEach(square => square.innerHTML=`${player.marker}`)
         newGame()
         }
     const checkStalemate = (count) => {
         if (count < 1) {document.querySelector('#winner').innerHTML = `<h1>Tie!</h1></div><div><button id='newGameBtn'>New game</button></div>`
-        newGame()}
+        newGame()
+        }
 }
-const newGame =() => document.querySelector('#newGameBtn').addEventListener('click', function(e) {
+const newGame =() => {
+    document.querySelector('#newGameBtn').addEventListener('click', function(e) {
     e.preventDefault()
+    displayController.resetAnnounce();
     gameBoard.resetBoard()
     remainingSpaces = 9;
     document.querySelector('#winner').innerHTML = ''
-})
+})}
     return {
         remainingSpaces,
         reduceSpaces,
@@ -118,10 +123,14 @@ const newGame =() => document.querySelector('#newGameBtn').addEventListener('cli
 
 const displayController = (() => {
     const activeAnnounce = document.querySelector('#active')
+    const resetAnnounce = () => {
+        activeAnnounce.innerHTML='';
+    }
     const toggleActive = (player) => {
-    activeAnnounce.innerHTML = `<h2>Active player: ${player.name}.</h2>`}
+    activeAnnounce.innerHTML = `<h2>${player.name}'s turn</h2>`}
     return {
         toggleActive,
+        resetAnnounce
     }
 })()
 
