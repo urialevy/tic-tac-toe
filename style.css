@@ -5,6 +5,7 @@ button {
 body {
     display: flex;
     flex-direction: column;
+    justify-items: center;
     margin-left: 5rem;
     width: 80vw;
     height: 120vh;

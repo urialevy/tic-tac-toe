@@ -91,7 +91,7 @@ const game = (() => {
     const checkWinningPosition = (player) =>{ 
         winningPositions.forEach(winningArray => winningArray.every(entry => gameBoard.gridItems[entry].innerHTML ==player.marker) ? winnerFound(player) : checkStalemate(remainingSpaces))}
     const winnerFound = (player) => {
-        document.querySelector('#winner').innerHTML = `<div><h1>Winner - ${player.name}!</h1></div><div><button id='newGameBtn'>New game</button></div>`
+        document.querySelector('#winner').innerHTML = `<h1>Winner - ${player.name}!</h1><button id='newGameBtn'>New game</button>`
         gameBoard.gridItems.forEach(square => square.innerHTML=`${player.marker}`)
         newGame()
         }
