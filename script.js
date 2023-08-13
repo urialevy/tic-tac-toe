@@ -15,30 +15,30 @@ const gameBoard = (() => {
     const submitBtn = document.querySelector('#submitBtn')
     const player1Name = document.querySelector('#player1Name');
     const player2Name = document.querySelector('#player2Name');
-    
     const toggleDisplay = () => {
-        let vis = false
-        vis == false ? document.querySelector('#grid').style.visibility = 'hidden' : document.querySelector('#grid').style.visibility = 'visible'
-        vis == true? vis === false : vis === true;
+    document.querySelector('#grid').style.visibility = 'hidden'
+
         }
     const addClick = () => {
-        gridItems.forEach(square => {
-            square.addEventListener('click', function(e){
-                e.preventDefault()
-                if (square.innerHTML == '') {
-                addMarker(square)
-                }
-            })
-        })
+        gridItems.forEach(square => {square.addEventListener('click', function(e) {
+            e.preventDefault()
+            playMove(square)
+        })})
+        
+    }
+    const playMove = (move) => {
+        if (move.innerHTML == '') {
+            addMarker(move)
+        }
+        
     }
     const setPlayerNames = () => {
       submitBtn.addEventListener('click', function(e) {
         e.preventDefault();
         player1.name = player1Name.value == '' ? 'Player 1' : player1Name.value
         player2.name = player2Name.value == '' ? 'Player 2' : player2Name.value
-        document.querySelector('#active').innerHTML = `<h2>Active player: ${currentPlayer.name}. Click anywhere in the UI to start.</h2>`
-        
-        toggleDisplay()
+        document.querySelector('#active').innerHTML = `<h2>Active player: ${currentPlayer.name}. </h2>`
+        document.querySelector('#grid').style.visibility = 'visible'
       })
     }
     let currentPlayer = player1;
@@ -56,6 +56,15 @@ const gameBoard = (() => {
     const switchPlayer = () =>{
         currentPlayer == player1 ? currentPlayer = player2 : currentPlayer = player1;
     }
+    const resetBoard = () => {
+        gameBoard.gridItems.forEach(item => item.innerHTML = '')
+        addClick()
+        currentPlayer = player1;
+        player1.name = '';
+        player2.name = '';
+        document.querySelector('#grid').style.visibility = 'hidden'
+    }
+
     return {
         addClick,
         addMarker,
@@ -63,7 +72,9 @@ const gameBoard = (() => {
         currentPlayer,
         switchPlayer,
         setPlayerNames,
-        toggleDisplay
+        toggleDisplay,
+        resetBoard,
+        playMove
     
     }
 })();
@@ -78,15 +89,28 @@ const game = (() => {
         winningPositions.forEach(winningArray => winningArray.every(entry => gameBoard.gridItems[entry].innerHTML ==player.marker) ? winnerFound(player) : checkStalemate(remainingSpaces))}
     const winnerFound = (player) => {
         document.querySelector('#active').innerHTML = ``;
-        document.querySelector('#winner').innerHTML = `<div><h1>Winner - ${player.name}! Reload the page to start a new game.</h1></div><div><button>New game</button></div>`
-        gameBoard.gridItems.forEach(item => item.innerHTML = '-')}
-const checkStalemate = (count) => {if (count < 1) document.querySelector('#winner').innerHTML = `<h1>Tie! Reload the page to try again.</h1>`}
+        document.querySelector('#winner').innerHTML = `<div><h1>Winner - ${player.name}!</h1></div><div><button id='newGameBtn'>New game</button></div>`
+        gameBoard.gridItems.forEach(square => square.innerHTML=`${player.marker}`)
+        newGame()
+        }
+    const checkStalemate = (count) => {
+        if (count < 1) {document.querySelector('#winner').innerHTML = `<h1>Tie!</h1></div><div><button id='newGameBtn'>New game</button></div>`
+        newGame()}
+}
+const newGame =() => document.querySelector('#newGameBtn').addEventListener('click', function(e) {
+    e.preventDefault()
+    gameBoard.resetBoard()
+    remainingSpaces = 9;
+    document.querySelector('#winner').innerHTML = ''
+})
     return {
         remainingSpaces,
         reduceSpaces,
         winningPositions,
         checkWinningPosition,
         winnerFound,
+        newGame
+
     }
 
     
